@@ -1,12 +1,11 @@
+
+import csv
+
+
 # create dictionary with x(user input) items
 # keys: slot number
 # values: None (participant names)
 # 
-from functools import partialmethod
-from re import match
-from typing import Match
-
-
 def setUp():
 
     while 1:
@@ -24,8 +23,7 @@ def setUp():
 
     return participants_dict
 
-def exit_app(participants_dict):
-    exit()
+
 
 def cancelSignUp(participants_dict):
     print("  Participant Cancellation ")
@@ -66,8 +64,15 @@ def viewParticipants(participants_dict):
 
 
 
-def saveChanges():
-    pass
+def saveChanges(participants_dict):
+    print("       Save Changes        ")
+    print("===========================")
+    if input("Save your changes to CSV? [y/n] ") == 'y':
+        with open('dict.csv', 'w') as csv_file:  
+            writer = csv.writer(csv_file)
+            for key, value in participants_dict.items():
+                writer.writerow([key, value])
+
 
 
 def slotSelectionValidation(participant_dict, message):
@@ -78,6 +83,13 @@ def slotSelectionValidation(participant_dict, message):
         else:
             print("Invalid input. Try again.")
 
+
+def exit_app(participants_dict):
+    print("           Exit            ")
+    print("===========================")
+    if input("Any unsaved changes will be lost.\nAre you sure you want to exit? [y/n]  ") == 'y':
+        print("Goodbye")
+        exit()
 
 
 # prompt for participant name and desired slot
@@ -103,6 +115,8 @@ def signUp(participants_dict):
 # Menu
 def mainMenu(participant_dict):
     choice = 0
+
+
 
     while 1:
         print("\n      Participant Menu     ")
